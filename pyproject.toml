@@ -3,7 +3,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [project]
-name = "rl-template"
+name = "rl-tic-tac-toe"
 version = "0.1.0"
 description = "Reinforcement Learning Template - Tic-Tac-Toe RL Agent"
 authors = [
@@ -11,7 +11,7 @@ authors = [
 ]
 readme = "README.md"
 requires-python = ">=3.9"
-license = {text = "MIT"}
+license = "MIT"
 
 [project.optional-dependencies]
 dev = [
@@ -27,11 +27,6 @@ notebooks = [
 ]
 
 [tool.poetry]
-name = "rl-template"
-version = "0.1.0"
-description = "Reinforcement Learning Template - Tic-Tac-Toe RL Agent"
-authors = ["Your Name <your.email@example.com>"]
-readme = "README.md"
 packages = [{include = "tictactoe_rl", from = "src"}]
 
 [tool.poetry.dependencies]
