@@ -1,0 +1,37 @@
+# Default configuration for RL agent
+project_name: tictactoe_rl
+seed: 42
+
+# Environment settings
+environment:
+  name: TicTacToe
+  board_size: 3
+  num_episodes: 10000
+
+# Training settings
+training:
+  algorithm: q_learning
+  learning_rate: 0.1
+  discount_factor: 0.99
+  epsilon_start: 1.0
+  epsilon_end: 0.01
+  epsilon_decay: 0.995
+  batch_size: 32
+  num_iterations: 1000
+
+# Model settings
+model:
+  type: neural_network
+  hidden_layers: [128, 128]
+  activation: relu
+  
+# Logging and checkpointing
+logging:
+  log_dir: artifacts/logs
+  log_interval: 100
+  checkpoint_interval: 1000
+
+# Output
+output:
+  model_dir: artifacts/models
+  plots_dir: artifacts/plots
