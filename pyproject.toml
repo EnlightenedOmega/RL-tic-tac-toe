@@ -2,47 +2,34 @@
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-[project]
+[tool.poetry]
 name = "rl-tic-tac-toe"
 version = "0.1.0"
 description = "Reinforcement Learning Template - Tic-Tac-Toe RL Agent"
-authors = [
-    {name = "Your Name", email = "your.email@example.com"},
-]
+authors = ["Your Name <your.email@example.com>"]
 readme = "README.md"
-requires-python = ">=3.9"
 license = "MIT"
-
-[project.optional-dependencies]
-dev = [
-    "pytest>=7.0",
-    "pytest-cov>=3.0",
-    "black>=22.0",
-    "ruff>=0.1.0",
-    "mypy>=0.990",
-]
-notebooks = [
-    "jupyter>=1.0",
-    "ipython>=8.0",
-]
-
-[tool.poetry]
-packages = [{include = "tictactoe_rl", from = "src"}]
+packages = [{ include = "tictactoe_rl", from = "src" }]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.11"
 numpy = "^1.21.0"
 pyyaml = "^6.0"
 matplotlib = "^3.5.0"
 tqdm = "^4.60.0"
 
+# Dev tools
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.0"
 pytest-cov = "^3.0"
 black = "^22.0"
 ruff = "^0.1.0"
 mypy = "^0.990"
-jupyter = "^1.0"
+ipython = "^8.0"
+
+# Optional notebooks group (install only if needed)
+[tool.poetry.group.notebooks.dependencies]
+jupyterlab = "^4.0"
 ipython = "^8.0"
 
 [tool.black]
@@ -54,7 +41,7 @@ line-length = 100
 target-version = "py39"
 
 [tool.mypy]
-python_version = "3.9"
+python_version = "3.11"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = false

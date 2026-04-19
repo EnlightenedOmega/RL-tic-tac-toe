@@ -8,8 +8,8 @@ class TicTacToeEnv:
     """Tic-Tac-Toe game environment.
     
     The board is represented as a 1D array of 9 elements:
-    - 1: Human player (X)
-    - -1: AI player (O)
+    - 1: Agent 1 (X)
+    - -1: Agent 2 (O)
     - 0: Empty cell
     
     Actions are integers 0-8 representing board positions:
