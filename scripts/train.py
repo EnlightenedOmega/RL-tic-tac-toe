@@ -17,7 +17,7 @@ def main():
     parser.add_argument(
         "--config",
         type=str,
-        default="configs/default.yaml",
+        default="configs/train.yaml",
         help="Path to configuration file",
     )
     parser.add_argument(
