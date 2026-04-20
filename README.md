@@ -1,6 +1,6 @@
 # RL Template - Tic-Tac-Toe Reinforcement Learning Agent
 
-A reinforcement learning project template for training and evaluating agents to play Tic-Tac-Toe.
+A reinforcement learning project template for training and evaluating agents to play Tic-Tac-Toe using q learning.
 
 ## Project Structure
 
