@@ -9,6 +9,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from tictactoe_rl.trainer import Trainer
 from tictactoe_rl.utils import load_config
+from tictactoe_rl.plotting import plot_training_history
 
 
 def main():
@@ -39,6 +40,11 @@ def main():
 
     # Train agent
     trainer.train()
+    
+    # Plot training history
+    history = trainer.get_training_history()
+    plot_output = args.output.replace(".pkl", "_history.png")
+    plot_training_history(history, output_path=plot_output)
 
     # Save trained model
     trainer.save_model(args.output)

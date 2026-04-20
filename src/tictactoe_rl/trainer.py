@@ -49,6 +49,16 @@ class Trainer:
 
         # Stats tracked over full training
         self.total_stats = {"x_wins": 0, "o_wins": 0, "draws": 0}
+        
+        # History for plotting
+        self.history = {
+            "x_wins": [],
+            "o_wins": [],
+            "draws": [],
+            "win_rate_x": [],
+            "win_rate_o": [],
+            "draw_rate": [],
+        }
 
     # ------------------------------------------------------------------
     # Core training loop
@@ -84,9 +94,20 @@ class Trainer:
             # Decay epsilon after every episode
             self.epsilon = max(epsilon_end, self.epsilon * epsilon_decay)
 
-            # Logging
-            if self.verbose and (episode + 1) % log_interval == 0:
-                self._log_progress(episode + 1, num_episodes, window_stats)
+            # Logging and history tracking
+            if (episode + 1) % log_interval == 0:
+                if self.verbose:
+                    self._log_progress(episode + 1, num_episodes, window_stats)
+                
+                # Track history
+                n = sum(window_stats.values())
+                self.history["x_wins"].append(window_stats["x_wins"])
+                self.history["o_wins"].append(window_stats["o_wins"])
+                self.history["draws"].append(window_stats["draws"])
+                self.history["win_rate_x"].append(100 * window_stats["x_wins"] / n if n else 0)
+                self.history["win_rate_o"].append(100 * window_stats["o_wins"] / n if n else 0)
+                self.history["draw_rate"].append(100 * window_stats["draws"] / n if n else 0)
+                
                 window_stats = {"x_wins": 0, "o_wins": 0, "draws": 0}
 
         if self.verbose:
@@ -178,6 +199,14 @@ class Trainer:
             f"O wins: {window_stats['o_wins']:>4} ({o_pct:5.1f}%) | "
             f"Draws: {window_stats['draws']:>4} ({d_pct:5.1f}%)"
         )
+
+    def get_training_history(self) -> Dict[str, list]:
+        """Get training history for plotting.
+        
+        Returns:
+            Dictionary with metrics tracked during training
+        """
+        return self.history
 
     # ------------------------------------------------------------------
     # Persistence

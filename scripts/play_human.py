@@ -55,29 +55,31 @@ def main():
     # Play games
     for game_num in range(args.num_games):
         print(f"\n=== Game {game_num + 1} ===")
+        print("Agent plays X, You play O")
         env = TicTacToeEnv()
 
         while not env.is_terminal():
-            print_board(env)
 
-            # Human move
-            human_move = get_human_move(env)
-            env.step(human_move)
+            # Agent move (X)
+            state = env.get_state()
+            agent_move = agent.select_action(state, epsilon=0.0)
+            print(f"Agent plays: {agent_move}")
+            env.step(agent_move)
+            print_board(env)
 
             if env.is_terminal():
                 break
 
-            # Agent move
-            state = env.get_state()
-            agent_move = agent.select_action(state, epsilon=0.0)
-            env.step(agent_move)
+            # Human move (O)
+            human_move = get_human_move(env)
+            env.step(human_move)
 
         print_board(env)
         reward = env.reward
         if reward > 0:
-            print("You won!")
-        elif reward < 0:
             print("Agent won!")
+        elif reward < 0:
+            print("You won!")
         else:
             print("It's a draw!")
 

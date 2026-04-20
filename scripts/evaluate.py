@@ -9,6 +9,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from tictactoe_rl.evaluator import Evaluator
 from tictactoe_rl.utils import load_model
+from tictactoe_rl.plotting import plot_evaluation_results
 
 
 def main():
@@ -20,6 +21,14 @@ def main():
         required=True,
         help="Path to trained model",
     )
+    
+    parser.add_argument(
+        "--plot_output",
+        type=str,
+        default="artifacts\\plots\\evaluation_results.png",
+        help="Path to save evaluation plot",
+    )
+    
     parser.add_argument(
         "--num_episodes",
         type=int,
@@ -38,6 +47,7 @@ def main():
 
     # Evaluate agent
     results = evaluator.evaluate(num_episodes=args.num_episodes)
+    plot_evaluation_results(results, output_path=args.plot_output)
 
     print("\n=== Evaluation Results ===")
     print(f"Win rate: {results['win_rate']:.2%}")

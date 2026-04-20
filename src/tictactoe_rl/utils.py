@@ -45,9 +45,9 @@ def load_model(model_path: str):
         data = pickle.load(f)
     
     # Handle both single agent and multi-agent saves
-    if isinstance(data, dict) and "agent_o" in data:
+    if isinstance(data, dict) and "agent_x" in data:
         # Multi-agent save from trainer
-        return data["agent_o"]
+        return data["agent_x"]
     else:
         # Single agent save
         return data
