@@ -39,11 +39,18 @@ def load_model(model_path: str):
         model_path: Path to model file
         
     Returns:
-        Loaded agent
+        Loaded agent (agent_x if multiple agents saved)
     """
     with open(model_path, "rb") as f:
-        agent = pickle.load(f)
-    return agent
+        data = pickle.load(f)
+    
+    # Handle both single agent and multi-agent saves
+    if isinstance(data, dict) and "agent_o" in data:
+        # Multi-agent save from trainer
+        return data["agent_o"]
+    else:
+        # Single agent save
+        return data
 
 
 def save_model(agent, model_path: str):
