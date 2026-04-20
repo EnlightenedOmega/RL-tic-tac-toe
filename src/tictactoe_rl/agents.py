@@ -54,7 +54,7 @@ class QLearningAgent(BaseAgent):
 
             q_values = self.q_table[state_key].copy()
             # Set invalid moves to very low value
-            # q_values[state != 0] = -np.inf
+            q_values[state != 0] = -np.inf
             return np.argmax(q_values)
 
     def update(
