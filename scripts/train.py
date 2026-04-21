@@ -46,9 +46,10 @@ def main():
     plot_output = args.output.replace(".pkl", "_history.png")
     plot_training_history(history, output_path=plot_output)
 
-    # Save trained model
+    # Save trained model (splits into agent_x.pkl and agent_o.pkl)
     trainer.save_model(args.output)
-    print(f"Model saved to {args.output}")
+    base_path = args.output.rsplit(".", 1)[0] if "." in args.output else args.output
+    print(f"Models saved to {base_path}_x.pkl and {base_path}_o.pkl")
 
 
 if __name__ == "__main__":

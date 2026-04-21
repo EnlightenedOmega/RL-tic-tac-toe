@@ -45,43 +45,86 @@ def main():
         required=True,
         help="Path to trained model",
     )
+    parser.add_argument(
+        "--player",
+        type=str,
+        choices=["x", "o"],
+        default=None,
+        help="Play as X or O (default: prompt user)",
+    )
     parser.add_argument("--num_games", type=int, default=1, help="Number of games to play")
 
     args = parser.parse_args()
 
-    # Load trained model
+    # Load trained agent_x model
     agent = load_model(args.model)
+
+    # Determine player choice
+    player_symbol = args.player
+    if player_symbol is None:
+        while True:
+            choice = input("Do you want to play as X or O? (x/o): ").strip().lower()
+            if choice in ["x", "o"]:
+                player_symbol = choice
+                break
+            print("Invalid choice. Please enter 'x' or 'o'.")
+
+    human_is_x = player_symbol == "x"
 
     # Play games
     for game_num in range(args.num_games):
         print(f"\n=== Game {game_num + 1} ===")
-        print("Agent plays X, You play O")
+        if human_is_x:
+            print("You play as X (first), Agent plays as O")
+        else:
+            print("Agent plays as X (first), You play as O")
+        
         env = TicTacToeEnv()
 
         while not env.is_terminal():
-
-            # Agent move (X)
             state = env.get_state()
-            agent_move = agent.select_action(state, epsilon=0.0)
-            print(f"Agent plays: {agent_move}")
-            env.step(agent_move)
-            print_board(env)
-
-            if env.is_terminal():
-                break
-
-            # Human move (O)
-            human_move = get_human_move(env)
-            env.step(human_move)
+            
+            if human_is_x:
+                # Human plays as X
+                if env.current_player == 1:
+                    human_move = get_human_move(env)
+                    env.step(human_move)
+                else:
+                    # Agent plays as O
+                    agent_move = agent.select_action(state, epsilon=0.0)
+                    print(f"Agent plays: {agent_move}")
+                    env.step(agent_move)
+                    print_board(env)
+            else:
+                # Agent plays as X, human plays as O
+                if env.current_player == 1:
+                    agent_move = agent.select_action(state, epsilon=0.0)
+                    print(f"Agent plays: {agent_move}")
+                    env.step(agent_move)
+                    print_board(env)
+                else:
+                    human_move = get_human_move(env)
+                    env.step(human_move)
 
         print_board(env)
         reward = env.reward
-        if reward > 0:
-            print("Agent won!")
-        elif reward < 0:
-            print("You won!")
+        
+        if human_is_x:
+            # Human is X, so positive reward means human won
+            if reward > 0:
+                print("You won!")
+            elif reward < 0:
+                print("Agent won!")
+            else:
+                print("It's a draw!")
         else:
-            print("It's a draw!")
+            # Human is O, so negative reward means human won
+            if reward > 0:
+                print("Agent won!")
+            elif reward < 0:
+                print("You won!")
+            else:
+                print("It's a draw!")
 
 
 if __name__ == "__main__":

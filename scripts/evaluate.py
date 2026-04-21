@@ -39,11 +39,11 @@ def main():
 
     args = parser.parse_args()
 
-    # Load trained model
-    agent = load_model(args.model)
+    # Load trained agent_x model
+    agent_x = load_model(args.model)
 
     # Initialize evaluator
-    evaluator = Evaluator(agent=agent, verbose=args.verbose)
+    evaluator = Evaluator(agent=agent_x, verbose=args.verbose)
 
     # Evaluate agent
     results = evaluator.evaluate(num_episodes=args.num_episodes)

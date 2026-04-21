@@ -213,39 +213,49 @@ class Trainer:
     # ------------------------------------------------------------------
 
     def save_model(self, path: str):
-        """Save both trained agents to disk.
+        """Save both trained agents to separate disk files.
 
         Args:
-            path: File path to save the model (pkl)
+            path: Base file path for the models (pkl). Agent X will be saved as
+                  path_x.pkl and Agent O as path_o.pkl. E.g., if path is 
+                  'artifacts/models/agent.pkl', files will be 'agent_x.pkl' and 'agent_o.pkl'
         """
         Path(path).parent.mkdir(parents=True, exist_ok=True)
-        payload = {
-            "agent_x": self.agent_x,
-            "agent_o": self.agent_o,
-            "config": self.config,
-            "total_stats": self.total_stats,
-            "episode_count": self.episode_count,
-        }
-        with open(path, "wb") as f:
-            pickle.dump(payload, f)
+        
+        # Split path into base and extension
+        base_path = str(path).rsplit(".", 1)[0] if "." in str(path) else str(path)
+        path_x = f"{base_path}_x.pkl"
+        path_o = f"{base_path}_o.pkl"
+        
+        # Save agent_x
+        with open(path_x, "wb") as f:
+            pickle.dump(self.agent_x, f)
+        
+        # Save agent_o
+        with open(path_o, "wb") as f:
+            pickle.dump(self.agent_o, f)
 
         if self.verbose:
-            print(f"Model saved to {path}")
+            print(f"Models saved to {path_x} and {path_o}")
 
     def load_model(self, path: str):
-        """Load agents from a previously saved file.
+        """Load agents from separately saved pickle files.
 
         Args:
-            path: File path to load the model from
+            path: Base file path to load the models from. Will look for files
+                  named path_x.pkl and path_o.pkl
         """
-        with open(path, "rb") as f:
-            payload = pickle.load(f)
-
-        self.agent_x = payload["agent_x"]
-        self.agent_o = payload["agent_o"]
-        self.total_stats = payload.get("total_stats", self.total_stats)
-        self.episode_count = payload.get("episode_count", 0)
+        # Split path into base and extension
+        base_path = str(path).rsplit(".", 1)[0] if "." in str(path) else str(path)
+        path_x = f"{base_path}_x.pkl"
+        path_o = f"{base_path}_o.pkl"
+        
+        with open(path_x, "rb") as f:
+            self.agent_x = pickle.load(f)
+        
+        with open(path_o, "rb") as f:
+            self.agent_o = pickle.load(f)
 
         if self.verbose:
-            print(f"Model loaded from {path}")
+            print(f"Models loaded from {path_x} and {path_o}")
             print(f"  Resumed from episode {self.episode_count}")
