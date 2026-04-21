@@ -1,11 +1,4 @@
 """Tests for TicTacToe environment."""
-
-import sys
-from pathlib import Path
-
-# Add src to path
-sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
-
 import pytest
 import numpy as np
 from tictactoe_rl.env import TicTacToeEnv

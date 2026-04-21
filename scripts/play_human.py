@@ -1,12 +1,6 @@
 """Interactive script to play Tic-Tac-Toe against trained agent."""
 
 import argparse
-import sys
-from pathlib import Path
-
-# Add src to path
-sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
-
 from tictactoe_rl.env import TicTacToeEnv
 from tictactoe_rl.utils import load_model
 

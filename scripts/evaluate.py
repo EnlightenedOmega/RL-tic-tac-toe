@@ -1,11 +1,6 @@
 """Evaluation script for trained RL agent."""
 
 import argparse
-import sys
-from pathlib import Path
-
-# Add src to path
-sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from tictactoe_rl.evaluator import Evaluator
 from tictactoe_rl.utils import load_model
