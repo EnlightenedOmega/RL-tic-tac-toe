@@ -6,7 +6,7 @@ build-backend = "poetry.core.masonry.api"
 name = "rl-tic-tac-toe"
 version = "0.1.0"
 description = "Reinforcement Learning Template - Tic-Tac-Toe RL Agent"
-authors = ["Your Name <your.email@example.com>"]
+authors = ["Roushan Kumar <kumar24.roushan@gmail.com>"]
 readme = "README.md"
 license = "MIT"
 packages = [{ include = "tictactoe_rl", from = "src" }]
