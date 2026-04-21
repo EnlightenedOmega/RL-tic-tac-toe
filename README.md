@@ -291,37 +291,3 @@ Ensure you're loading the correct model file. Use `--verbose` flag to check file
 python scripts/evaluate.py --model artifacts/models/agent.pkl --verbose
 ```
 
-### Training Too Slow
-
-Reduce `num_iterations` in config for faster iteration during development:
-```yaml
-training:
-  num_iterations: 1000  # Instead of 5000
-```
-
-### No Output During Training
-
-Use `--verbose` flag to see training progress:
-```bash
-python scripts/train.py --verbose
-```
-
-## Contributing
-
-Contributions welcome! Please ensure:
-1. Code passes all tests: `pytest tests/`
-2. Code is formatted: `black src/ scripts/ tests/`
-3. No lint issues: `ruff check src/ scripts/ tests/`
-
-## References
-
-- Q-Learning: Watkins, C. J., & Dayan, P. (1992). Q-learning. Machine learning, 8(3), 279-292.
-- Tic-Tac-Toe Complexity: There are 5,478 unique board positions (not counting symmetries) and 255,168 possible games.
-
-## License
-
-MIT License - see LICENSE file for details
-
-## Authors
-
-Reinforcement Learning implementation for Tic-Tac-Toe
