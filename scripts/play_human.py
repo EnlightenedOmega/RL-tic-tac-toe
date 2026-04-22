@@ -67,13 +67,15 @@ def main():
 
     # Play games
     for game_num in range(args.num_games):
+        env = TicTacToeEnv()
+    
         print(f"\n=== Game {game_num + 1} ===")
         if human_is_x:
             print("You play as X (first), Agent plays as O")
+            print_board(env)
         else:
             print("Agent plays as X (first), You play as O")
         
-        env = TicTacToeEnv()
 
         while not env.is_terminal():
             state = env.get_state()
@@ -104,18 +106,18 @@ def main():
         reward = env.reward
         
         if human_is_x:
-            # Human is X, so positive reward means human won
-            if reward > 0:
+            # Human is X (player 1), so reward = 1.0 means human won
+            if reward == 1.0:
                 print("You won!")
-            elif reward < 0:
+            elif reward == -1.0:
                 print("Agent won!")
             else:
                 print("It's a draw!")
         else:
-            # Human is O, so negative reward means human won
-            if reward > 0:
+            # Human is O (player -1), so reward = 1.0 means agent won
+            if reward == 1.0:
                 print("Agent won!")
-            elif reward < 0:
+            elif reward == -1.0:
                 print("You won!")
             else:
                 print("It's a draw!")
